@@ -76,6 +76,7 @@ Projeye ait bazı ekran görüntüleri
 ![image](https://user-images.githubusercontent.com/105427467/212129863-9fd805ee-7e7f-4f58-9129-45ba96f957ac.png)
 ![image](https://user-images.githubusercontent.com/105427467/212129917-9100ff95-c68f-47f9-b3fc-a9fc304f3003.png)
 ![image](https://user-images.githubusercontent.com/105427467/212129984-e03b4df5-c07c-4f72-bb9d-979849576a6a.png)
+![image](https://user-images.githubusercontent.com/105427467/212130084-b13c88dd-91c3-4b56-8e22-145d4a857dc3.png)
 
 daha fazlası için : https://www.youtube.com/watch?v=FK25E1w9X38
 
