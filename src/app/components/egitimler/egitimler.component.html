@@ -1,0 +1,298 @@
+<div class="anaarkaplan">
+  <div class="container mt-5">
+    <div *ngIf="uye | async as user" class="col-md-4">
+
+      <button class="btn btn-warning mt-3" (click)="egitimEkleModaliAc(egitimeklememodal)"
+        *ngIf="user.rol == '0' || user.rol == '1'">Yeni Eğitim Ekle</button>
+    </div>
+
+    <form>
+      <div class="col-md-2" style="display: inline-block">
+        <select class="form-select mt-2 bg-warning" #katId>
+          <option value="tumu">Tümünü Listele</option>
+          <option value="{{kategori.katId}}" *ngFor="let kategori of kategoriler">{{kategori.katAdi}}</option>
+        </select>
+      </div>
+      <button class="btn btn-outline-warning ms-2" (click)="kategorilereGoreListele(katId.value)">Listele</button>
+      <div *ngIf="uye | async as user" class="inline">
+        <button class="btn btn-outline-warning ms-2" routerLink="/kategoriler" *ngIf="user.rol == '0'">Kategorileri Düzenle</button>
+      </div>
+
+    </form>
+
+
+
+
+
+    <!-- EĞİTİMLERİN LİSTELENDİĞİ YER  -->
+
+    <div class="row row-cols-1 row-cols-md-4 g-4" *ngIf="uye | async as user">
+      <div class="col mt-5 mb-5" *ngFor="let egitim of tumEgitimler">
+        <div class="card h-100">
+          <button class="btn btn-sm"
+            [ngClass]="{'btn-danger':egitim.ucretlimi == 'true', 'btn-success':egitim.ucretlimi == 'false'}">
+            <div *ngIf="egitim.ucretlimi == 'true'">Ücretli</div>
+            <div *ngIf="egitim.ucretlimi == 'false'">Ücretsiz</div>
+          </button>
+
+          <img
+            [src]=" egitim.foto ?? '../../../assets/retina_1708x683_cover-angular-5-tutorial-325403e130ba3b2c367174b73bb7275a.png'"
+            class="card-img-top listelenenResim" alt="...">
+          <button class="btn btn-outline-warning text-dark btn-sm"
+            (click)="yorumlarModali(egitim,yorumlarModal,user)">Yorumları Görüntüle
+            &nbsp;|&nbsp; Yorum Yap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </button>
+          <div class="card-body bg-dark text-white">
+            <p class="card-title">{{egitim.egitimAdi}}</p>
+            <p class="card-text">{{egitim.aciklamasi}}</p>
+            <p *ngIf="egitim.egitimiVerenId">Eğitmen : {{egitimVerenAdiById(egitim.egitimiVerenId)}}
+              {{egitimiVerenEgitmenAdi}}</p>
+            <p>Kategori: {{egitimKategoriById(egitim.egitimKatId)}} {{egitiminKategorisi}}</p>
+            <div class="text-warning kucuk">Eklenme Tarihi : {{egitim.egitimEkTarih | date:'dd.MM.yyyy HH:mm:ss'}}</div>
+          </div>
+          <div class="card-footer altkisim">
+
+            <ul class="list-group" *ngIf="uye | async as user">
+              <div class="row" *ngIf="user.rol == '0' || user.rol == '1'">
+                <button class="btn btn-outline-dark col btn-sm"
+                  [ngClass]="{disabled: user.rol != '0' && (user.uid != egitim.egitimiVerenId)}"
+                  (click)="egitimSilModalAc(egitimSilmeModal,egitim)">Sil</button>
+                <button class="btn btn-outline-dark col btn-sm ms-2"
+                  (click)="egitimDuzenleModaliAc(egitimDuzenleModal,egitim)"
+                  [ngClass]="{disabled:user.rol != '0' && (user.uid != egitim.egitimiVerenId)}">Düzenle</button>
+                <button class="btn btn-outline-dark col btn-sm ms-2"
+                  (click)="fotografDuzenleModalAc(fotografEkleModal,egitim)"  [ngClass]="{disabled:user.rol != '0' && (user.uid != egitim.egitimiVerenId)}">Resmi Düzenle</button>
+              </div>
+            </ul>
+            <div *ngIf="uye | async as user">{{egitimiAlmismiBak(user,egitim)}}
+              <ul *ngIf="user.rol == '2'" class="list-group">
+                <button class="btn btn-outline-dark btn-sm" (click)="standartKullaniciDersEkledi(egitim,user)"
+                  [ngClass]="{'disabled':egitimiAlmisMi == true}">Eğitimi Al</button>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODALLAR  -->
+
+    <!-- Eğitim Ekleme Modal  -->
+
+    <div class="modal" tabindex="-1" #egitimeklememodal>
+      <div class="modal-dialog">
+        <form [formGroup]="egitimEkleme" (ngSubmit)="kaydet(fotografEkleModal)">
+          <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+              <h5 class="modal-title">Eğitim Ekleme</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-dark text-light">
+
+              <div class="form-group">
+                <label>Eğitim Adı</label>
+                <input type="text" class="form-control a00" formControlName="egitimAdi">
+                <label>Kategorisi</label>
+                <select class="form-control a00" formControlName="egitimKatId">
+                  <option value="{{kat.katId}}" *ngFor="let kat of kategoriler">{{kat.katAdi}}</option>
+                </select>
+                <label for="">Eğitim Açıklaması</label>
+                <textarea cols="30" rows="5" class="form-control a00" formControlName="aciklamasi"></textarea>
+                <label for="">Ücretli Mi ?</label>
+                <select class="form-control a00" formControlName="ucretlimi">
+                  <option value='true'>Ücretli</option>
+                  <option value='false'>Ücretsiz</option>
+                </select>
+
+                <label for="">Eğitimi Veren</label>
+                <div *ngIf="uye | async as user">
+                  <select class="form-control a00" formControlName="egitimiVerenId" *ngIf="user.rol == '0'">
+                    <option value="{{egitmen.uid}}" *ngFor="let egitmen of egitmenler">{{egitmen.displayName}}</option>
+                  </select>
+                  <select class="form-control a00" formControlName="egitimiVerenId" *ngIf="user.rol == '1'">
+                    <option value="{{user.uid}}" selected>{{user.displayName}}</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer bg-dark">
+
+              <input type="submit" class="btn btn-outline-warning" value="Kaydet">
+              <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Kapat</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Yeni eklenen eğitime resim ekleme Modal  -->
+
+    <div class="modal" tabindex="-1" #fotografEkleModal>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-dark text-light">
+            <h5 class="modal-title">Eğitimin Resmini Düzenleme</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body bg-warning text-dark">
+            <h6 *ngIf="seciliEgitim">{{seciliEgitim.egitimAdi}} adlı eğitimin resmini düzenleyin.</h6>
+            <div class="row">
+              <div class="col">
+                <ul class="list-group"><img width="120" height="120" *ngIf="seciliEgitim"
+                    [src]="seciliEgitim.foto ?? 'assets/3d-render-set-academic-hat-different-positions.jpg'"
+                    class="upresim" />
+                  <input #inputField type="file" hidden (change)="ResimYukle($event,seciliEgitim )" />
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <ul class="list-group"><button class="btn btn-outline-dark mt-2" (click)="inputField.click()">Resim
+                    Seç</button></ul>
+                <small class="text-dark mt-2">Önerilen 700*350 boyutudur.</small>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer bg-warning">
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Vazgeç</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- YORUM GÖRÜNTÜLEME/EKLEME/SİLME MODAL  -->
+
+    <div class="modal" tabindex="-1" #yorumlarModal>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-warning text-dark">
+            <h5 class="modal-title" *ngIf="yorumModaliAcikMi">{{yorumicinSeciliEgitim.egitimAdi}} Yorumları</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body bg-dark text-light" *ngIf="seciliKullanici">
+            <div>
+              {{egitimiAlmismiBak(seciliKullanici,yorumicinSeciliEgitim)}}
+              <div *ngIf="egitimiAlmisMi">
+                <small>Bir Yorum Yazın</small>
+                <form [formGroup]="yorumEkleme" (ngSubmit)="yorumKaydet()">
+                  <textarea cols="30" rows="2" class="form-control mb-2 a00" formControlName="yorum"></textarea>
+                  <button class="btn btn-outline-warning mb-3" type="submit">Yorumu Kaydet</button>
+                </form>
+
+              </div>
+              <div *ngIf="!egitimiAlmisMi">
+                <p>Yalnızca aldığınız eğitimlere yorum yapabilirsiniz.</p>
+              </div>
+
+              <p *ngIf="filtreliYorumlar.length < 1" class="text-danger">Bu eğitim için henüz yorum yapılmamıştır ! </p>
+              <div class="d-flex flex-row comment-row" *ngFor="let yorum of filtreliYorumlar">
+                {{kisiVer(yorum.yapanId)}}
+                
+                <div  class="p-2"><span class="round"><img [src]=" donguKisi.foto??'https://firebasestorage.googleapis.com/v0/b/fir-data-aca8d.appspot.com/o/images%2FPngItem_1468843.png?alt=media&token=5a28f35b-fe40-4004-a0b3-ccd574748b5d'"
+                      alt="user" width="50" style="border-radius: 20px;"></span></div>
+                <div >
+                  <h5>{{donguKisi.displayName}}</h5>
+                  <h5 *ngIf="donguKisi.rol == '1'" class="bg-primary">Eğitmen</h5>
+                  <div class="comment-footer">
+                    <small class="date">{{yorum.yapilmaTarihi | date:'dd.MM.yyyy HH:mm:ss'}}</small>
+                  </div>
+                  <div class="yorumkismi mb-3">{{yorum.yorum}}</div>
+                  <div *ngIf="uye | async as user">
+                    <button class="btn btn-outline-warning mb-3" *ngIf="user.rol == '0' || user.uid == yorum.yapanId"
+                    (click)="yorumSil(yorum)">Yorumu Sil</button>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal"
+                (click)="yorumModaliKapat()">Kapat</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EĞİTİM SİLME MODAL  -->
+
+    <div class="modal" tabindex="-1" #egitimSilmeModal>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-dark text-light">
+            <h5 class="modal-title">Eğitim Silme</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body bg-warning text-dark">
+            <h6 *ngIf="seciliEgitim">{{seciliEgitim.egitimAdi}} adlı eğitim silinecektir onaylıyor musunuz ?</h6>
+          </div>
+          <div class="modal-footer bg-warning">
+
+            <button class="btn btn-danger" *ngIf="seciliEgitim" (click)="egitimSil()">Sil</button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Vazgeç</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <!-- EĞİTİM DÜZENLEME MODAL -->
+
+    <div class="modal" tabindex="-1" #egitimDuzenleModal>
+      <div class="modal-dialog">
+        <form [formGroup]="egitimDuzenleme" (ngSubmit)="egitimDuzenle()">
+          <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+              <h5 class="modal-title">Eğitim Düzenleme</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-dark text-light">
+
+              <div class="form-group">
+                <label>Eğitim Adı</label>
+                <input type="text" class="form-control a00" formControlName="egitimAdi">
+                <label>Kategorisi</label>
+                <select class="form-control a00" formControlName="egitimKatId">
+                  <option value="{{kat.katId}}" *ngFor="let kat of kategoriler">{{kat.katAdi}}</option>
+                </select>
+                <label for="">Eğitim Açıklaması</label>
+                <textarea cols="30" rows="5" class="form-control a00" formControlName="aciklamasi"></textarea>
+                <label for="">Ücretli Mi ?</label>
+                <select class="form-control a00" formControlName="ucretlimi">
+                  <option value='true'>Ücretli</option>
+                  <option value='false'>Ücretsiz</option>
+                </select>
+
+                <label for="">Eğitimi Veren</label>
+                <select class="form-control a00" formControlName="egitimiVerenId">
+                  <option value="{{egitmen.uid}}" *ngFor="let egitmen of egitmenler">{{egitmen.displayName}}</option>
+                </select>
+
+                <div *ngIf="duzenlerkenSeciliEgitim"><input type="hidden" value="{{duzenlerkenSeciliEgitim.egitimId}}"
+                    formControlName="egitimId"></div>
+
+              </div>
+
+            </div>
+            <div class="modal-footer bg-dark">
+
+              <input type="submit" class="btn btn-outline-warning" value="Kaydet">
+              <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Kapat</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

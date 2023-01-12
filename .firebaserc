@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fir-data-aca8d": {
+      "hosting": {
+        "egitimPortaliFinal": [
+          "fir-data-aca8d"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fir-data-aca8d"
+  }
+}

@@ -1,0 +1,90 @@
+<div class="anaarkaplan">
+<div class="container mt-5" *ngIf="uye | async as user">
+  <div class="row">
+    <div class="col-2 mt-5 me-5">
+     <div class="row mt-2"></div>
+      <img class="foto mt-4 me-5" [src]="user.foto ?? 'https://firebasestorage.googleapis.com/v0/b/fir-data-aca8d.appspot.com/o/images%2Fpngwing.com.png?alt=media&token=807981a9-31ea-4666-a6b8-2b082823a264'">
+      <input #inputField type="file" hidden (change)="ResimYukle($event, user)" />
+      <div class="row">
+        <button class="btn btn-dark mt-3 mb-5 mx-auto text-center ms-5" (click)="inputField.click()">Resim Seç</button>
+      </div>
+     
+    </div>
+    
+    <div class="col-4 text-center mt-5 ms-5">
+      <div class="col-10 display-5 baslik mx-auto mb-4">
+        Kullanıcı Bilgileri
+     </div>
+        <div class="card bg-dark text-light col-9 mx-auto mb-5 ms-5">
+         <div class="card-content">
+          <p> <small class="yukaridakiler">Adı Soyadı</small> <br>{{user.displayName}}</p>
+          <p *ngIf="user.rol == '2'"> <small class="yukaridakiler">Rolü</small> <br>Kullanıcı</p>
+          <p *ngIf="user.rol == '1'"> <small class="yukaridakiler">Rolü</small> <br>Eğitmen</p>
+          <p *ngIf="user.rol == '0'"> <small class="yukaridakiler">Rolü</small> <br>Admin</p>
+          <p> <small class="yukaridakiler">E-Posta</small> <br>{{user.email}}</p>
+          <p> <small class="yukaridakiler">Kayıt Tarihi</small> <br>{{user.kayTarih | date:'dd.MM.yyyy HH:mm:ss'}}</p>
+          <p> <small class="yukaridakiler">Düzenlenme Tarihi</small> <br>{{user.duzTarih | date:'dd.MM.yyyy HH:mm:ss'}}</p>
+        </div>
+     
+        <div class="card-footer bg-dark">
+          <button class="btn btn-warning" (click)="kullaniciyiDuzenleModali(kullaniciDuzenleModali,user)">Bilgilerimi Düzenle</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-5 mt-5 text-center">
+      <div class="col-7 display-5 baslik mx-auto mb-4" *ngIf="user.rol == '2'">Alınan Dersler</div>
+      <div class="col-7 display-5 baslik mx-auto mb-4" *ngIf="user.rol == '1'">Verilen Dersler</div>
+      <div *ngFor="let ders of user.alinanVerilenDersler">
+        {{dersiGetir(ders)}}
+        
+        <div class="col-5 mx-auto">
+          <div class="card bg-dark mt-3">
+            <p *ngIf="donguDers" class="text-light"> <span class="yukaridakiler">Eğitim Adı</span> <br>{{donguDers.egitimAdi}}</p>
+
+          </div>
+
+        </div>
+       
+      </div>
+    </div>
+    
+  </div>
+  <div class="modal" tabindex="-1" #kullaniciDuzenleModali>
+    <div class="modal-dialog">
+      <form [formGroup]="kullaniciDuzenleme" (ngSubmit)="kullaniciyiDuzenle()">
+        <div class="modal-content">
+          <div class="modal-header bg-warning text-dark">
+            <h5 class="modal-title">Kullanıcı Düzenleme</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body bg-dark text-light">
+
+            <div class="form-group">
+              <label>Kullanıcı Adı Soyadı</label>
+              <input class="siyah" type="text" class="form-control" formControlName="displayName">
+             <div *ngIf="user.rol == '0'">
+              <label>Rol</label>
+              <select class="form-control" formControlName="rol" >
+                <option value="0">Admin</option>
+                <option value="1">Eğitmen</option>
+                <option value="2">Standart Kullanıcı</option>
+              </select>
+             </div>
+            
+              
+              <label for="">E-Posta</label>
+              <input class="siyah" type="mail" class="form-control" formControlName="email">
+
+            </div>
+
+          </div>
+          <div class="modal-footer bg-dark">
+
+            <input type="submit" class="btn btn-warning" value="Kaydet">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Kapat</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div></div>

@@ -1,0 +1,93 @@
+
+
+
+
+<div class="container-fluid anaarkaplan">
+  <div class="row mt-5"></div>
+  <div class="row mt-5">
+    <div class="col-md-4 mt-5"></div>
+    <div class="col-md-4 text-center">
+      
+
+      <ul class="nav nav-pills mb-3 navbarimsisey p-2  justify-content-center"  style="border-radius:30px" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active bg-warning text-dark" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Giriş Yap</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link bg-warning text-dark ms-4" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Kayıt Ol</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+          
+          <form class="duzeltme arkasinaresimgelecek p-5 mb-3">
+
+        
+            <h2 class="display-5 beyaz">Giriş Yapın</h2> 
+            
+            <div class="form-floating mt-4 mb-2">
+              <input type="email" class="form-control" id="floatingInput" placeholder="isim@ornek.com" #mail>
+              <label for="floatingInput">E-Posta</label>
+            </div>
+            
+            <div class="form-floating mt-3 mb-2">
+              <input type="password" class="form-control" id="floatingPassword" placeholder="Password" #parola>
+              <label for="floatingPassword">Parola</label>
+            </div>
+            <button class="w-100 btn btn-lg btn-warning mt-4 mb-3" (click)="girisYap(mail.value,parola.value)">Giriş Yap</button>
+            <small class="text-light">veya Google ile oturum aç. <br> </small>
+            <img src="../../../assets/google.png" class="img-fluid rounded-top mt-3 btn" style="height: 50px;" alt="Google ile Giriş"  (click)="signWithGoogle()">
+            <p class="mt-3 mb-3 beyaz">Hesabınız yok mu ? Yukarıdan Kayıt Ol'a tıklayın.</p>
+          </form>
+
+
+
+
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+          
+
+          <form class="duzeltme arkasinaresimgelecek p-5 mb-5">
+
+        
+            <h2 class="display-5 beyaz">Kayıt Olun</h2> 
+            <div class="form-floating mt-4 mb-2">
+              <input type="text" class="form-control" id="floatingInput2" placeholder="Ali Yılmaz" #adsoyad>
+              <label for="floatingInput">Ad Soyad</label>
+            </div>
+            <div class="form-floating mt-4 mb-2">
+              <input type="email" class="form-control" name="email" id="email2" placeholder="isim@ornek.com" #mailKayit>
+              <label for="email">E-Posta</label>
+            </div>
+            <div class="form-floating mt-3 mb-2">
+              <input type="password" class="form-control" id="floatingPassword2" placeholder="Password" #parolaKayit>
+              <label for="floatingPassword">Parola</label>
+            </div>
+            <button class="w-100 btn btn-lg btn-warning mt-4 mb-4" (click)="kayitOl(adsoyad.value,mailKayit.value,parolaKayit.value)">Kayıt Ol</button>
+            <small class="text-light">veya Google ile kayıt ol. <br> </small>
+            <img src="../../../assets/google.png" class="img-fluid rounded-top mt-3 btn" style="height: 50px;" alt="" (click)="signWithGoogle()">
+            <p class="mt-2 mb-3 beyaz">Eğer Hesabınız Varsa Yukarıdan Giriş Yap'a Tıklayınız.</p>
+          </form>
+
+
+
+        </div>
+      </div>
+
+
+
+
+
+    
+    </div>
+    <div class="col-md-4"></div>
+    <div class="row mb-5"></div>
+    <div class="row mb-5"></div>
+    <div class="row mb-5"></div>
+    <div class="row mb-5"></div>
+    <div class="row mb-5"></div>
+    <div class="row mb-5"></div>
+    <div class="row mb-5"></div>
+    <div class="row mb-5"></div>
+  </div>
+</div>

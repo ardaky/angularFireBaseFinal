@@ -1,0 +1,68 @@
+<div class="anaarkaplan">
+
+
+<div class="container mt-5">
+  <div class="row mt-5">
+    <div class="col-10 mx-auto">
+      <h1 class="display-4 text-center mt-5 bg-dark text-light p-3">Kategoriler</h1>
+      <ul class="list-group mt-4">
+        <button class="btn btn-dark text-warning" (click)="kategoriEkleModalAc(kategoriEkleModal)">Yeni Kategori Ekle</button>
+      </ul>
+      
+      <table class="table table-dark table-striped table-hover text-center mt-3">
+        <thead class="bg-dark">
+          <th>Kategori Adı</th>
+          <th>Kategoriye Ait Eğitimler</th>
+          <th>Düzenle</th>
+          <th>Sil</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let kat of kategoriler">
+            <td class="lead text-center">{{kat.katAdi}}</td>
+            {{kategoriDersleriVer(kat.katId)}}
+            <td><span *ngFor="let egitim of kategoriEgitimleri">{{egitim.egitimAdi}}, </span> </td>
+            <td><button class="btn btn-outline-warning" (click)="kategoriDuzenleModalAc(kategoriEkleModal,kat)">Düzenle</button></td>
+            <td><button class="btn btn-outline-warning" (click)="kategoriSil(kat)">Sil</button></td>
+          </tr>
+        </tbody>
+  
+      </table>
+    </div>
+  
+    
+     
+
+   </div>
+  </div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+
+
+
+<div class="modal" tabindex="-1" #kategoriEkleModal>
+  <div class="modal-dialog">
+    <form [formGroup]="kategoriEkleme" (ngSubmit)="kategoriKaydet()">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-dark">
+          <h5 class="modal-title">{{modalbaslik}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body bg-dark text-light">
+
+          <div class="form-group">
+            <label>Kategori Adı</label>
+            <input type="text" class="form-control a00" formControlName="katAdi">
+          
+        
+          </div>
+
+        </div>
+        <div class="modal-footer bg-dark">
+
+          <input type="submit" class="btn btn-outline-warning" value="Kaydet">
+          <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Kapat</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

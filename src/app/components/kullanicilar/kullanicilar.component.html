@@ -1,0 +1,201 @@
+
+<div  *ngIf="uye | async as user else yetkiyok" class="anaarkaplan">
+<div class="container mt-5" *ngIf="user.rol == '0'">
+  <div class="row">
+    <div class="col-4">
+      <ul class="list-group"><button class="btn btn-dark mt-4 btn-block kullaniciekleme" (click)="kullaniciyiEkleModaliAc(kullaniciEklemeModal)">Yeni Kullanıcı Ekle</button></ul>
+    </div>
+  </div>
+  
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm ">
+    
+    <div class="col mb-3 mt-5" *ngFor="let kullanici of tumkullanicilar">
+      <div class="card mt-2">
+        <div class="card-body text-center bg-dark text-white">
+          <img [src]="kullanici.foto?? ' ../../../assets/PngItem_1468843.png'" style="width:100px;margin-top:-65px;height:100px;" alt="Kullanıcı"
+            class="img-fluid img-thumbnail rounded-circle border-0 mb-3">
+          <h5 class="card-title">{{kullanici.displayName}}</h5>
+          <ul class="list-group">
+            <button class="btn btn-danger btn-sm mb-3" *ngIf="kullanici.rol == '0' ">Admin</button>
+            <button class="btn btn-primary btn-sm mb-3" *ngIf="kullanici.rol == '1' ">Eğitmen</button>
+            <button class="btn btn-success btn-sm mb-3" *ngIf="kullanici.rol == '2' ">Kullanıcı</button>
+          </ul>
+
+          <p class="font-size-sm"><span class="yukaridakiler">E-Posta</span><br>{{kullanici.email}}</p>
+
+          <p> <span class="yukaridakiler">Kayıt Tarihi</span><br>{{kullanici.kayTarih | date:'dd.MM.yyyy HH:mm:ss'}}</p>
+          <p><span class="yukaridakiler">Düzenleme Tarihi</span><br> {{kullanici.duzTarih | date:'dd.MM.yyyy HH:mm:ss'}}
+          </p>
+          <ul class="list-group" *ngIf="kullanici.rol == '1'"><button class="btn btn-outline-warning btn-sm"  
+            (click)="alinanVerilenEgitimlerGor(kullaniciEgitimiGoruntulemeModal,kullanici)" >Verdiği
+              Eğitimler</button></ul>
+          <ul class="list-group" *ngIf="kullanici.rol == '2'"><button class="btn btn-outline-warning btn-sm"
+            (click)="alinanVerilenEgitimlerGor(kullaniciEgitimiGoruntulemeModal,kullanici)"
+              >Aldığı Eğitimler</button></ul>
+          <ul class="list-group" *ngIf="kullanici.rol == '0'"><button class="btn btn-outline-warning btn-sm" 
+            (click)="alinanVerilenEgitimlerGor(kullaniciEgitimiGoruntulemeModal,kullanici)"
+              disabled>Adminler Eğitim Almaz ve Vermez</button></ul>
+        </div>
+        <div class="card-footer bg-warning">
+          <button class="btn btn-outline-dark btn-sm col-5 ms-2" (click)="kullaniciyiSilmeModali(kullaniciSilmeModal,kullanici)">Sil</button>
+          <button class="btn btn-outline-dark btn-sm col-5 ms-3" (click)="kullaniciyiDuzenleModali(kullaniciDuzenleModali,kullanici)">Düzenle</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+
+
+
+
+
+
+  <!-- ALINAN VERİLEN DERSLER MODALI  -->
+
+  <div class="modal" tabindex="-1" #kullaniciEgitimiGoruntulemeModal>
+    <div class="modal-dialog">
+
+      <div class="modal-content bg-dark">
+        <div class="modal-header bg-warning text-dark">
+          <h5 class="modal-title" *ngIf="seciliKullanici">{{seciliKullanici.displayName}} Kullanıcısının aldığı eğitimler</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+          <table class="table table-dark table-hover">
+            <thead>
+              <tr>
+
+                <th scope="col">Eğitim Adı</th>
+                <th scope="col">Kategori</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="seciliKullanici">
+              <tr *ngFor="let ders of seciliKullanici.alinanVerilenDersler">
+                {{dersiGetir(ders)}}
+                <td>{{donguDers.egitimAdi}}</td>
+                <td>{{kategori.katAdi}}</td>
+
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <div class="modal-footer bg-dark">
+          <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Kapat</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- YENİ KULLANICI EKLEME MODALI  -->
+
+  <div class="modal" tabindex="-1" #kullaniciEklemeModal >
+    <div class="modal-dialog">
+      <form (ngSubmit)="kayitOl(adsoyad.value,mail.value,parola.value,rol.value)">
+        <div class="modal-content">
+          <div class="modal-header bg-warning text-dark">
+            <h5 class="modal-title">Kullanıcı Ekleme</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body bg-dark text-light">
+
+            <div class="form-group">
+              <label>Kullanıcı Adı Soyadı</label>
+              <input class="siyah a00 form-control" type="text" #adsoyad>
+              <label>Rol</label>
+              <select class="form-control a00" #rol>
+                <option value="0">Admin</option>
+                <option value="1">Eğitmen</option>
+                <option value="2">Standart Kullanıcı</option>
+              </select>
+              <label for="">E-Posta</label>
+              <input class="siyah form-control a00" type="mail" #mail>
+              <label for="">Parola</label>
+              <input class="siyah form-control a00" type="password" #parola>
+              <label class="bg-danger mt-2" for="">Uyarı ! Oluşturulan Kullanıcı hesabına giriş yapılacaktır. Eğer kullanıcı 
+                admin değilse bu sayfaya tekrar dönmek için çıkış yapıp bir admin hesabına giriş yapmanız
+                gerekmektedir.
+              </label>
+            </div>
+
+          </div>
+          <div class="modal-footer bg-dark">
+
+            <input type="submit" class="btn btn-outline-warning" value="Kaydet">
+            <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Kapat</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- KULLANICI SİLMEK İÇİN SORU MODALI  -->
+
+  <div class="modal" tabindex="-1" #kullaniciSilmeModal>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-light">
+          <h5 class="modal-title">Kullanıcı Silme</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body bg-warning text-dark">
+          <h6 *ngIf="seciliKullanici">{{seciliKullanici.displayName}} adlı kullanıcının kaydı silinecektir onaylıyor musunuz ?</h6>
+        </div>
+        <div class="modal-footer bg-warning">
+  
+          <button class="btn btn-danger" *ngIf="seciliKullanici" (click)="kullaniciyiSil()">Sil</button>
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Vazgeç</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
+
+  <!-- KULLANICI DÜZENLEME MODALI  -->
+
+  <div class="modal" tabindex="-1" #kullaniciDuzenleModali>
+    <div class="modal-dialog">
+      <form [formGroup]="kullaniciDuzenleme" (ngSubmit)="kullaniciyiDuzenle()">
+        <div class="modal-content">
+          <div class="modal-header bg-warning text-dark">
+            <h5 class="modal-title">Kullanıcı Düzenleme</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body bg-dark text-light">
+
+            <div class="form-group">
+              <label>Kullanıcı Adı Soyadı</label>
+              <input class="siyah" type="text" class="form-control" formControlName="displayName">
+              <label>Rol</label>
+              <select class="form-control" formControlName="rol">
+                <option value="0">Admin</option>
+                <option value="1">Eğitmen</option>
+                <option value="2">Standart Kullanıcı</option>
+              </select>
+              <label for="">E-Posta</label>
+              <input class="siyah" type="mail" class="form-control" formControlName="email">
+
+            </div>
+
+          </div>
+          <div class="modal-footer bg-dark">
+
+            <input type="submit" class="btn btn-warning" value="Kaydet">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Kapat</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<ng-template class="row mt-5" class="bg-danger mt-5 text-center"  #yetkiyok>
+  <p class="text-light" > <br><br><br><br><br><br><br><br><br><br> <br><br> Bu bölümü görüntülemeye yetkiniz yok !</p> <br><br><br><br> <br><br><br><br><br><br><br><br><br>
+</ng-template>

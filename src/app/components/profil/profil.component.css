@@ -1,0 +1,44 @@
+.foto{
+    max-width:280px ;
+    max-height: 450px;
+    border-radius: 30px;
+    border-style: solid;
+    border-width: 5px;
+    border-color:rgb(255, 174, 23);
+    box-shadow: 0px 0px 30px 10px orange;
+}
+
+p{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: orange;
+    padding-bottom: 12px;
+    
+}
+
+.yukaridakiler{
+    font-size: 12px;
+    color: rgb(204, 204, 204);
+}
+
+.card{
+    border-radius: 20px;
+}
+
+.card:hover{
+    box-shadow: 0px 0px 30px 1px black;
+}
+
+.anaarkaplan{
+    background:url(../../../assets/GettyImages-577674005_492115_zfpgiw.jpg);
+    background-size: 500px;
+    width: 100%;
+
+}
+
+.baslik{
+    background-color: orange;
+    padding:8px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 30px 10px orange;
+}

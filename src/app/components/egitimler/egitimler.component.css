@@ -1,0 +1,58 @@
+.altkisim{
+    background-color: rgb(255, 182, 46);
+    color:black;
+    text-align: center;
+}
+
+p{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: orange;
+    padding-bottom: 12px;
+    text-align: center;
+    font-size: 14px;
+    
+}
+
+.card-title{
+    font-size: 22px;
+    text-align: center;
+}
+
+.anaarkaplan{
+    background:url(../../../assets/arka2.jpg);
+    background-size: 500px;
+    width: 100%;
+}
+
+.a00{
+    background-color: rgb(65, 65, 65);
+    color:rgb(238, 238, 238);
+}
+
+.a00:focus{
+    background-color: rgb(65, 65, 65);
+    color:rgb(238, 238, 238);
+}
+
+.upresim{
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 15px;
+    margin:auto;
+}
+
+.listelenenResim{
+    max-height: 168px;
+}
+
+.kucuk{
+    font-size: 10px;
+    text-align: center;
+    margin: auto;
+
+}
+
+.yorumkismi{
+    font-size: 18px;
+}

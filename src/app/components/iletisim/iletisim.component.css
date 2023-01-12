@@ -1,0 +1,18 @@
+.iletisimformu{
+    margin:22px;
+    border-width: 1px;
+    padding:1% 10% 3% 10%;
+    background-color: rgb(245, 245, 245);
+    box-shadow: 0px 0px 80px  rgb(198, 198, 198) ;
+    border-radius: 26px;
+}
+
+.googlemap{
+    width: 80%;
+}
+
+.anaarkaplan{
+    background:url(../../../assets/GettyImages-577674005_492115_zfpgiw.jpg);
+    background-size: 500px;
+    width: 100%;
+}
