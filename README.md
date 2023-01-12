@@ -1,27 +1,61 @@
-# EgitimPortaliFinal
+Firebase Angular Final Projesi Tanıtımı
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+Projede olan özellikler:
 
-## Development server
+Admin Arayüzü Özellikleri:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+* Eğitimleri Listeleme
+* Eğitimleri Kategorilere Göre Listeleme
+* Eğitim Ekleme
+* Eğitim Silme
+* Eğitim Düzenleme (hangi eğitmenin o eğitimi verdiği, adı, kategorisi, açıklaması)
+* Eğitime Resim Ekleme
+* Eğitimin Resmini Düzenleme
+* Eğitimin Yorumlarını Görüntüleme
+* Eğitimden Yorum Silme
+* Kategorileri Listeleme
+* Kategorileri Düzenleme
+* Yeni Kategori Ekleme
+* Kategori Silme
+* Tüm Kullanıcıları Listeleme
+* Kullanıcı Kaydı Yapma
+* Kullanıcının Bilgilerini Düzenleme
+* Kullanıcının Aldığı veya Verdiği Eğitimleri Görme
+* Kullanıcının Kaydını Silme
+* Kendi Profil Sayfasını Görüntüleme
+* Kendi Profil fotoğrafını değiştirme
+* Kendi Bilgilerini Düzenleme
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Eğitmen Arayüzü Özellikleri:
 
-## Build
+* Eğitimleri Listeleme 
+* Eğitimleri Kategorilere Göre Listeleme
+* Eğitim Ekleme (YALNIZCA KENDİSİNİ SEÇEBİLİR EĞİTMEN KISMINDAN)
+* Eğitim Silme (YALNIZCA KENDİ VERDİĞİ EĞİTİMLERİ SİLEBİLİR)
+* Eğitim Düzenleme (hangi eğitmenin o eğitimi verdiği, adı, kategorisi, açıklaması) (YALNIZCA KENDİ VERDİĞİ EĞİTİMLERİ DÜZENLEYEBİLİR)
+* Eğitime Resim Ekleme (YALNIZCA KENDİ VERDİĞİ EĞİTİMLER İÇİN)
+* Eğitimin Resmini Düzenleme (YALNIZCA KENDİ VERDİĞİ EĞİTİMLER İÇİN)
+* Eğitimin Yorumlarını Görüntüleme
+* Kendi Eğitimlerine Yorum Yazma
+* Kendi Profil Sayfasını Görüntüleme
+* Kendi Profil fotoğrafını değiştirme
+* Kendi Bilgilerini Düzenleme
+* Kendi Verdiği Eğitimleri Profilinde Listeleme
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+Kullanıcı Arayüzü Özellikleri:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* Eğitimleri Listeleme
+* Eğitimleri Kategorilere Göre Listeleme
+* Eğitimin Yorumlarını Görüntüleme
+* Bir Eğitimi Satın Alma
+* YALNICA SATIN ALDIĞI EĞİTİMLER İÇİN GEÇERLİ - Eğitime Yorum Yazma
+* Kendine Ait Olan Bir Yorumu Silme
+* Kendi Profil Sayfasını Görüntüleme
+* Kendi Profil fotoğrafını değiştirme
+* Kendi Bilgilerini Düzenleme
+* Kendi Aldığı Eğitimleri Profilinde Listeleme
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
